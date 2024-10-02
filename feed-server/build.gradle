@@ -1,0 +1,49 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.4'
+	id 'io.spring.dependency-management' version '1.1.6'
+	id 'com.google.cloud.tools.jib' version '3.4.0'
+}
+
+group = 'com.sns'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+jib {
+	from {
+		image = 'openjdk:21'
+	}
+	to {
+		image = '900603399370.dkr.ecr.ap-northeast-2.amazonaws.com/feed-server' // ecr repo url
+		tags = ['0.0.1']
+
+//		auth {
+//			username = 'AWS'
+//			password = project.findProperty('ecr_password') ?: System.getenv('AWS_ECR_PASSWORD')
+//		}
+	}
+	container {
+		creationTime = 'USE_CURRENT_TIMESTAMP'
+	}
+}

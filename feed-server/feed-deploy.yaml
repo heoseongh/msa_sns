@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: feed-server
+  namespace: sns
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+  selector:
+      matchLabels:
+        app: feed-server
+  template:
+    metadata:
+      labels:
+        app: feed-server
+    spec:
+      containers:
+        - name: feed-container
+          image: 900603399370.dkr.ecr.ap-northeast-2.amazonaws.com/feed-server:0.0.1
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: dev
+          envFrom:
+            - configMapRef:
+                name: mysql-config
+            - secretRef:
+                name: mysql-secret
+          resources:
+            requests:
+              memory: "512"
+              cpu: "500m" # 0.5 core
+            limits:
+              memory: "1Gi"
+              cpu: "1000m" # 1 core
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh", "-c", "sleep 10"] # rolling update시 안정적인 교체를 위함
+          readinessProbe:
+            httpGet:
+              path: /healthcheck/ready
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 1
+            successThreshold: 1
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /healthcheck/ready
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 1
+            # successThreshold: 1 -> 무조건 1이어서 따로 안해도 됨
+            failureThreshold: 7

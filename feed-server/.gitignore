@@ -1,0 +1,60 @@
+.gradle/
+build/
+out/
+**/build/
+**/out/
+
+# JAR files
+*.jar
+*.war
+
+# Generated files
+*.class
+*.log
+*.tmp
+
+# Gradle wrapper files
+gradle/wrapper/gradle-wrapper.jar
+gradle/wrapper/gradle-wrapper.properties
+
+# IntelliJ IDEA files
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+# Eclipse files
+.classpath
+.project
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Other files to ignore
+HELP.md
+mysql-configmap.yaml
+mysql-secret.yaml
+
+# Spring files
+.springBeans
+.sts4-cache
+
+# Binaries
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+# NetBeans files
+/nbproject/private/
+.nb-gradle/
+nbbuild/
+dist/
+nbdist/
+
+# VS Code files
+.vscode/
+
