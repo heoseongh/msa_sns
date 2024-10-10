@@ -22,6 +22,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.projectlombok:lombok'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	annotationProcessor 'org.projectlombok:lombok'
+
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
@@ -38,11 +41,6 @@ jib {
 	to {
 		image = '900603399370.dkr.ecr.ap-northeast-2.amazonaws.com/feed-server' // ecr repo url
 		tags = ['0.0.1']
-
-//		auth {
-//			username = 'AWS'
-//			password = project.findProperty('ecr_password') ?: System.getenv('AWS_ECR_PASSWORD')
-//		}
 	}
 	container {
 		creationTime = 'USE_CURRENT_TIMESTAMP'
