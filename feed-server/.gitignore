@@ -58,3 +58,6 @@ nbdist/
 # VS Code files
 .vscode/
 
+# Local application configuration
+application-local.yaml
+
